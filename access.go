@@ -451,7 +451,7 @@ func (s *Server) handleAssertionRequest(w *Response, r *http.Request) *AccessReq
 	return ret
 }
 
-func (s *Server) FinishAccessRequest(w *Response, r *http.Request, ar *AccessRequest) {
+func (s *Server) FinishAccessRequest(w *Response, r *http.Request, ar *AccessRequest) (ret *AccessData) {
 	// don't process if is already an error
 	if w.IsError {
 		return
@@ -462,7 +462,7 @@ func (s *Server) FinishAccessRequest(w *Response, r *http.Request, ar *AccessReq
 		redirectUri = ar.RedirectUri
 	}
 	if ar.Authorized {
-		var ret *AccessData
+		//var ret *AccessData
 		var err error
 
 		if ar.ForceAccessData == nil {
@@ -520,6 +520,7 @@ func (s *Server) FinishAccessRequest(w *Response, r *http.Request, ar *AccessReq
 	} else {
 		s.setErrorAndLog(w, E_ACCESS_DENIED, nil, "finish_access_request=%s", "authorization failed")
 	}
+	return
 }
 
 // Helper Functions
